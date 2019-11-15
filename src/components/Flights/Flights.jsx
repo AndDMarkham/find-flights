@@ -1,34 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Flight from './Flight.jsx'
+import ErrorMessage from './ErrorMessage.jsx'
 
 const flightsStyle = {
-    display: 'flex',
-    flexFlow: 'column wrap',
     border: '1px solid black',
     borderRadius: '2rem',
-    height: '90vh',
-    width: '90vw',
+    height: '80vh',
+    width: '80vw',
     padding: '2rem'
 }
 
+const flightsContainerStyle = {
+    display: 'flex',
+    flexFlow: 'column wrap',
+    width: '75vw',
+    height: '75vh'
+}
+
 const Flights = props => {
-
-    const flights = [
-        {
-            departure_time: '09:00',
-            arrival_time: '11:00'
-        },
-        {
-            departure_time: '13:30',
-            arrival_time: '15:30'
-        }
-    ]
-
+    const { arrival, departure, flightData, loading } = props;
+    
     return (
         <div style={flightsStyle}>
-            <h2>Flights from Prague to Valencia</h2>
-            <Flight flights={flights} />
+            <h2>Flights from {departure} to {arrival}</h2>
+            <div style={flightsContainerStyle}>
+                {
+                    loading ? <h3>Loading...</h3> : ( flightData.length === 0 ? <ErrorMessage /> : <Flight flights={flightData} /> )
+                }
+            </div>
         </div>
     )
 }
